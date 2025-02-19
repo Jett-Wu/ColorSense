@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>色彩理论 - ColorSense</title>
+    
+    <!-- 引入字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="styles/theory.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">ColorSense</a>
+            <div class="nav-content">
+                <div class="nav-links">
+                    <a href="/recommend.html">推荐配色</a>
+                    <a href="/palettes.html">生成配色</a>
+                    <a href="/theory.html" class="active">色彩理论</a>
+                </div>
+                <div class="nav-controls">
+                    <a href="https://github.com/Jett-Wu/ColorSense" class="github-star" target="_blank">
+                        <i class="fab fa-github"></i>
+                        <span>Star</span>
+                    </a>
+                    <div class="theme-switch-wrapper">
+                        <label class="theme-switch" title="切换主题">
+                            <input type="checkbox" class="theme-switch-input">
+                            <span class="theme-switch-track">
+                                <span class="theme-switch-thumb">
+                                    <i class="fas fa-moon theme-switch-icon moon-icon"></i>
+                                    <i class="fas fa-sun theme-switch-icon sun-icon"></i>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="lang-switch-wrapper">
+                        <label class="lang-switch" title="Switch Language">
+                            <input type="checkbox" class="lang-switch-input">
+                            <span class="lang-switch-track">
+                                <span class="lang-switch-thumb">
+                                    <span class="lang-icon zh-icon">中</span>
+                                    <span class="lang-icon en-icon">EN</span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="theory-container">
+            <section class="theory-section">
+                <h2>色彩基础</h2>
+                <div class="theory-content">
+                    <div class="theory-text">
+                        <h3>色相、饱和度与明度</h3>
+                        <p>色相（Hue）是色彩的基本属性，如红、黄、蓝等。饱和度（Saturation）表示色彩的纯度，明度（Brightness）则表示色彩的明暗程度。</p>
+                    </div>
+                    <div class="theory-demo">
+                        <!-- 色相环示意图 -->
+                        <div class="color-wheel"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="theory-section">
+                <h2>色彩搭配原理</h2>
+                <div class="theory-content">
+                    <article class="color-scheme">
+                        <h3>单色配色</h3>
+                        <p>使用同一色相的不同明度和饱和度变化，创造和谐统一的视觉效果。</p>
+                        <div class="scheme-demo monochromatic-demo">
+                            <div class="color-picker">
+                                <label>选择基础色相</label>
+                                <input type="color" class="base-color" value="#4A90E2">
+                            </div>
+                            <div class="color-variations">
+                                <!-- 动态生成的色块 -->
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="color-scheme">
+                        <h3>互补色配色</h3>
+                        <p>使用色轮上相对的两种颜色，产生强烈的对比效果。</p>
+                        <div class="scheme-demo complementary-demo">
+                            <div class="interactive-wheel">
+                                <div class="color-wheel">
+                                    <div class="base-color-indicator"></div>
+                                    <div class="complement-indicator"></div>
+                                </div>
+                                <div class="selected-colors">
+                                    <div class="base-color-display"></div>
+                                    <div class="complement-color-display"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="color-scheme">
+                        <h3>三角配色</h3>
+                        <p>在色轮上选择相隔120度的三种颜色，形成平衡和谐的搭配。</p>
+                        <div class="scheme-demo triadic-demo">
+                            <div class="interactive-wheel">
+                                <div class="color-wheel">
+                                    <div class="triadic-indicator"></div>
+                                </div>
+                                <div class="triadic-colors">
+                                    <div class="color-1"></div>
+                                    <div class="color-2"></div>
+                                    <div class="color-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p class="copyright">&copy; 2024 ColorSense</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/theory.js"></script>
+</body>
+</html> 

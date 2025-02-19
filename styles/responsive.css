@@ -1,0 +1,12 @@
+/* 响应式样式 */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-links {
+        width: 100%;
+        text-align: center;
+    }
+} 

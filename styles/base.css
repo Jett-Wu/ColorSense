@@ -1,0 +1,30 @@
+/* 基础样式 */
+:root {
+    --primary: #4A90E2;
+    --primary-dark: #357ABD;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --bg-accent: #f0f7ff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --secondary-color: #f8f9fa;
+    --text-color: #333;
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+    --navbar-bg: rgba(255, 255, 255, 0.95);
+    --footer-bg: rgba(248, 249, 250, 0.95);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+    min-height: 100vh;
+} 

@@ -1,0 +1,218 @@
+/* 色彩理论页面样式 */
+.theory-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.theory-section {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.theory-section h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.theory-content {
+    display: grid;
+    gap: 2rem;
+}
+
+.theory-text {
+    line-height: 1.8;
+}
+
+.theory-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.theory-demo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* 色相环样式 */
+.color-wheel {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: conic-gradient(
+        red, orange, yellow, lime, cyan, blue, purple, magenta, red
+    );
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 配色方案示例 */
+.color-scheme {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.scheme-demo {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 单色配色演示 */
+.color-picker {
+    margin-bottom: 1rem;
+}
+
+.color-picker label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.base-color {
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.color-variations {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.color-variations .color-box {
+    height: 60px;
+    border-radius: 6px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.color-variations .color-box:hover {
+    transform: scale(1.05);
+}
+
+/* 互补色演示 */
+.interactive-wheel {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.color-wheel {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: relative;
+    background: conic-gradient(
+        from 0deg,
+        hsl(0, 100%, 50%),
+        hsl(60, 100%, 50%),
+        hsl(120, 100%, 50%),
+        hsl(180, 100%, 50%),
+        hsl(240, 100%, 50%),
+        hsl(300, 100%, 50%),
+        hsl(360, 100%, 50%)
+    );
+}
+
+.selected-colors {
+    display: flex;
+    gap: 1rem;
+}
+
+.selected-colors > div {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 三角配色演示 */
+.triadic-colors {
+    display: flex;
+    gap: 1rem;
+}
+
+.triadic-colors > div {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 优化背景 */
+body {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.8),
+        rgba(245, 247, 250, 0.8)
+    );
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 添加背景装饰 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(46, 204, 113, 0.1) 0%, transparent 50%);
+    z-index: -1;
+}
+
+/* 响应式布局调整 */
+@media (max-width: 1024px) {
+    .emotion-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .emotion-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .interactive-wheel {
+        flex-direction: column;
+    }
+    
+    .color-wheel {
+        width: 150px;
+        height: 150px;
+    }
+} 
