@@ -5,6 +5,7 @@ class PaletteGenerator {
     constructor() {
         this.refreshBtn = document.querySelector('.refresh-btn');
         this.paletteGrid = document.querySelector('.palette-grid');
+        this.colorSchemes = []; // 缓存生成的配色方案
         
         this.setupEventListeners();
         this.generatePalettes(); // 初始生成配色
@@ -12,55 +13,76 @@ class PaletteGenerator {
     
     setupEventListeners() {
         this.refreshBtn.addEventListener('click', () => {
-            this.refreshBtn.style.pointerEvents = 'none'; // 防止重复点击
-            this.generatePalettes();
-            setTimeout(() => {
-                this.refreshBtn.style.pointerEvents = 'auto';
-            }, 500);
+            // 使用 requestAnimationFrame 优化动画性能
+            requestAnimationFrame(() => {
+                this.refreshBtn.style.pointerEvents = 'none';
+                this.refreshBtn.classList.add('rotating');
+                this.generatePalettes();
+                
+                setTimeout(() => {
+                    this.refreshBtn.style.pointerEvents = 'auto';
+                    this.refreshBtn.classList.remove('rotating');
+                }, 300);
+            });
         });
     }
     
     generatePalettes() {
-        this.paletteGrid.innerHTML = ''; // 清空现有配色
+        // 使用 DocumentFragment 减少 DOM 操作
+        const fragment = document.createDocumentFragment();
+        this.colorSchemes = []; // 清空缓存
         
-        // 生成6个配色方案
+        // 预先生成所有配色方案
         for (let i = 0; i < 6; i++) {
             const colors = this.generateColorScheme();
-            this.createPaletteCard(colors);
+            this.colorSchemes.push(colors);
+            fragment.appendChild(this.createPaletteCard(colors));
         }
+        
+        // 一次性更新 DOM
+        this.paletteGrid.innerHTML = '';
+        this.paletteGrid.appendChild(fragment);
     }
     
     generateColorScheme() {
-        // 随机生成基础色相
         const baseHue = Math.floor(Math.random() * 360);
         const scheme = [];
-        
-        // 随机选择配色方案类型
         const schemeType = Math.floor(Math.random() * 3);
+        
+        // 预计算常用值
+        const hue120 = (baseHue + 120) % 360;
+        const hue180 = (baseHue + 180) % 360;
+        const hue240 = (baseHue + 240) % 360;
         
         switch (schemeType) {
             case 0: // 单色配色
-                scheme.push(this.hslToHex(baseHue, 70, 50));
-                scheme.push(this.hslToHex(baseHue, 60, 70));
-                scheme.push(this.hslToHex(baseHue, 80, 30));
-                scheme.push(this.hslToHex(baseHue, 50, 60));
-                scheme.push(this.hslToHex(baseHue, 90, 40));
+                scheme.push(
+                    this.hslToHex(baseHue, 70, 50),
+                    this.hslToHex(baseHue, 60, 70),
+                    this.hslToHex(baseHue, 80, 30),
+                    this.hslToHex(baseHue, 50, 60),
+                    this.hslToHex(baseHue, 90, 40)
+                );
                 break;
                 
             case 1: // 互补色配色
-                scheme.push(this.hslToHex(baseHue, 70, 50));
-                scheme.push(this.hslToHex(baseHue, 60, 70));
-                scheme.push(this.hslToHex((baseHue + 180) % 360, 70, 50));
-                scheme.push(this.hslToHex((baseHue + 180) % 360, 60, 70));
-                scheme.push(this.hslToHex(baseHue, 80, 40));
+                scheme.push(
+                    this.hslToHex(baseHue, 70, 50),
+                    this.hslToHex(baseHue, 60, 70),
+                    this.hslToHex(hue180, 70, 50),
+                    this.hslToHex(hue180, 60, 70),
+                    this.hslToHex(baseHue, 80, 40)
+                );
                 break;
                 
             case 2: // 三角配色
-                scheme.push(this.hslToHex(baseHue, 70, 50));
-                scheme.push(this.hslToHex((baseHue + 120) % 360, 70, 50));
-                scheme.push(this.hslToHex((baseHue + 240) % 360, 70, 50));
-                scheme.push(this.hslToHex(baseHue, 60, 70));
-                scheme.push(this.hslToHex((baseHue + 120) % 360, 60, 70));
+                scheme.push(
+                    this.hslToHex(baseHue, 70, 50),
+                    this.hslToHex(hue120, 70, 50),
+                    this.hslToHex(hue240, 70, 50),
+                    this.hslToHex(baseHue, 60, 70),
+                    this.hslToHex(hue120, 60, 70)
+                );
                 break;
         }
         
@@ -71,51 +93,53 @@ class PaletteGenerator {
         const card = document.createElement('div');
         card.className = 'color-card';
         
-        const strip = document.createElement('div');
-        strip.className = 'color-strip';
+        // 使用模板字符串优化 HTML 创建
+        card.innerHTML = `
+            <div class="color-strip">
+                ${colors.map(color => 
+                    `<div class="color" style="background-color: ${color}"></div>`
+                ).join('')}
+            </div>
+            <div class="color-info">
+                <div class="hex-codes">
+                    ${colors.map(color => 
+                        `<span class="hex-code" data-color="${color}">${color.toUpperCase()}</span>`
+                    ).join('')}
+                </div>
+            </div>
+        `;
         
-        colors.forEach(color => {
-            const colorDiv = document.createElement('div');
-            colorDiv.className = 'color';
-            colorDiv.style.backgroundColor = color;
-            strip.appendChild(colorDiv);
-        });
-        
-        const info = document.createElement('div');
-        info.className = 'color-info';
-        
-        const hexCodes = document.createElement('div');
-        hexCodes.className = 'hex-codes';
-        
-        colors.forEach(color => {
-            const code = document.createElement('span');
-            code.className = 'hex-code';
-            code.textContent = color.toUpperCase();
-            code.addEventListener('click', () => {
+        // 使用事件委托优化事件监听
+        card.querySelector('.hex-codes').addEventListener('click', (e) => {
+            if (e.target.classList.contains('hex-code')) {
+                const color = e.target.dataset.color;
                 navigator.clipboard.writeText(color);
+                
+                const originalText = e.target.textContent;
                 const lang = localStorage.getItem('language') || 'zh';
-                code.textContent = getTranslations()[lang].palettes.copied;
+                e.target.textContent = getTranslations()[lang].palettes.copied;
+                
                 setTimeout(() => {
-                    code.textContent = color.toUpperCase();
+                    e.target.textContent = originalText;
                 }, 1000);
-            });
-            hexCodes.appendChild(code);
+            }
         });
         
-        info.appendChild(hexCodes);
-        card.appendChild(strip);
-        card.appendChild(info);
-        this.paletteGrid.appendChild(card);
+        return card;
     }
     
+    // 优化的 HSL 转 Hex 函数
     hslToHex(h, s, l) {
         l /= 100;
         const a = s * Math.min(l, 1 - l) / 100;
+        
+        // 使用位运算优化计算
         const f = n => {
             const k = (n + h / 30) % 12;
             const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
             return Math.round(255 * color).toString(16).padStart(2, '0');
         };
+        
         return `#${f(0)}${f(8)}${f(4)}`;
     }
 }

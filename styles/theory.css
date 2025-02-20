@@ -43,8 +43,9 @@
 
 .theory-demo {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    gap: 2rem;
     padding: 2rem;
 }
 
@@ -57,6 +58,8 @@
         red, orange, yellow, lime, cyan, blue, purple, magenta, red
     );
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    cursor: pointer;
 }
 
 /* 配色方案示例 */
@@ -81,23 +84,33 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* 单色配色演示 */
+/* 单色配色演示样式优化 */
 .color-picker {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     margin-bottom: 1rem;
 }
 
 .color-picker label {
-    display: block;
-    margin-bottom: 0.5rem;
+    order: 2;
+    margin: 0;
     color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
 .base-color {
-    width: 100px;
+    order: 1;
+    width: 60px;
     height: 40px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.base-color:hover {
+    transform: scale(1.05);
 }
 
 .color-variations {
@@ -145,26 +158,59 @@
 .selected-colors {
     display: flex;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
-.selected-colors > div {
-    width: 80px;
-    height: 80px;
+.color-preview {
+    position: relative;
+    width: 60px;
+    height: 60px;
     border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.color-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.color-preview .color-value {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.color-preview:hover .color-value {
+    opacity: 1;
 }
 
 /* 三角配色演示 */
 .triadic-colors {
     display: flex;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
-.triadic-colors > div {
+.triadic-colors .color-preview {
     width: 60px;
     height: 60px;
     border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.triadic-colors .color-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* 优化背景 */
@@ -214,5 +260,181 @@ body::before {
     .color-wheel {
         width: 150px;
         height: 150px;
+    }
+}
+
+/* 色轮交互效果优化 */
+.color-wheel {
+    position: relative;
+    cursor: pointer;
+}
+
+/* 优化指示器样式 */
+.indicator-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.6);
+    transform-origin: left;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 锁定状态样式 */
+.color-wheel.locked .indicator-line {
+    opacity: 0.4;
+}
+
+.color-wheel.locked {
+    cursor: pointer;
+}
+
+.color-wheel.locked::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+}
+
+/* 互补色指示器 */
+.complementary-demo .indicator-line {
+    transition: transform 0.3s ease;
+}
+
+.complementary-demo .indicator-line::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.complementary-demo .complement-line {
+    opacity: 0.8;
+}
+
+/* 三角配色指示器样式优化 */
+.triadic-demo .indicator-line {
+    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.triadic-demo .indicator-line::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+/* 选中点指示器 */
+.selected-point {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+/* 颜色点样式 */
+.color-point {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 2px white, 0 0 5px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.main-point {
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 0 2px white, 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.complement-point {
+    opacity: 0.9;
+}
+
+/* 色彩信息显示样式 */
+.color-info {
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.selected-color-preview {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.color-values {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 140px;
+}
+
+.value-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    height: 24px;
+    width: 140px;
+    justify-content: flex-start;
+}
+
+.value-item .label {
+    color: var(--text-secondary);
+    width: 75px;
+    display: inline-block;
+    text-align: left;
+}
+
+.value-item .value {
+    font-family: monospace;
+    font-size: 1rem;
+    color: var(--text-primary);
+    width: 50px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 2px;
+}
+
+/* 调整布局 */
+@media (max-width: 768px) {
+    .theory-demo {
+        flex-direction: column;
+    }
+    
+    .color-info {
+        margin-left: 0;
+        margin-top: 1.5rem;
     }
 } 

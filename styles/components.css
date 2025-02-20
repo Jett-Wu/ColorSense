@@ -647,6 +647,8 @@ h3 {
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .color-card:hover {
@@ -701,4 +703,24 @@ h3 {
     .palette-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* 添加刷新按钮动画 */
+.refresh-btn.rotating i {
+    animation: rotate 0.3s ease;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 优化色卡动画性能 */
+.color-card {
+    will-change: transform;
+    transform: translateZ(0);
 } 

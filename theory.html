@@ -20,12 +20,12 @@
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="/" class="logo">ColorSense</a>
+            <a href="./" class="logo">ColorSense</a>
             <div class="nav-content">
                 <div class="nav-links">
-                    <a href="/recommend.html">推荐配色</a>
-                    <a href="/palettes.html">生成配色</a>
-                    <a href="/theory.html" class="active">色彩理论</a>
+                    <a href="./recommend.html">推荐配色</a>
+                    <a href="./palettes.html">生成配色</a>
+                    <a href="./theory.html" class="active">色彩理论</a>
                 </div>
                 <div class="nav-controls">
                     <a href="https://github.com/Jett-Wu/ColorSense" class="github-star" target="_blank">
@@ -65,12 +65,31 @@
                 <h2>色彩基础</h2>
                 <div class="theory-content">
                     <div class="theory-text">
-                        <h3>色相、饱和度与明度</h3>
-                        <p>色相（Hue）是色彩的基本属性，如红、黄、蓝等。饱和度（Saturation）表示色彩的纯度，明度（Brightness）则表示色彩的明暗程度。</p>
+                        <h3 data-i18n="theory.basics.subtitle"></h3>
+                        <p data-i18n="theory.basics.description.hue"></p>
+                        <p data-i18n="theory.basics.description.saturation"></p>
+                        <p data-i18n="theory.basics.description.brightness"></p>
                     </div>
                     <div class="theory-demo">
                         <!-- 色相环示意图 -->
                         <div class="color-wheel"></div>
+                        <div class="color-info">
+                            <div class="selected-color-preview"></div>
+                            <div class="color-values">
+                                <div class="value-item">
+                                    <span class="label">色相 (H):</span>
+                                    <span class="value hue-value">-</span>
+                                </div>
+                                <div class="value-item">
+                                    <span class="label">饱和度 (S):</span>
+                                    <span class="value saturation-value">-</span>
+                                </div>
+                                <div class="value-item">
+                                    <span class="label">明度 (B):</span>
+                                    <span class="value brightness-value">-</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -115,12 +134,10 @@
                         <div class="scheme-demo triadic-demo">
                             <div class="interactive-wheel">
                                 <div class="color-wheel">
-                                    <div class="triadic-indicator"></div>
+                                    <!-- 指示器会通过 JavaScript 动态添加 -->
                                 </div>
                                 <div class="triadic-colors">
-                                    <div class="color-1"></div>
-                                    <div class="color-2"></div>
-                                    <div class="color-3"></div>
+                                    <!-- 颜色预览会通过 JavaScript 动态添加 -->
                                 </div>
                             </div>
                         </div>
