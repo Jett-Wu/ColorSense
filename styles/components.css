@@ -247,6 +247,15 @@ h3 {
     flex: 1;
     position: relative;
     cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.color-block:hover {
+    transform: scale(1.05);
+}
+
+.color-block:active {
+    transform: scale(0.95);
 }
 
 .color-value {
@@ -255,11 +264,13 @@ h3 {
     left: 50%;
     transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.9);
-    padding: 2px 6px;
+    padding: 4px 8px;
     border-radius: 4px;
     font-size: 0.8rem;
     opacity: 0;
     transition: opacity 0.2s ease;
+    font-family: monospace;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .color-block:hover .color-value {
@@ -332,18 +343,62 @@ h3 {
     color: white;
 }
 
-/* 提示框样式 */
+/* 提示框样式优化 */
 .toast {
     position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
+    bottom: 24px;
+    right: 24px; /* 改为右下角 */
+    transform: translateX(120%); /* 初始位置在屏幕外 */
+    background: rgba(0, 0, 0, 0.85);
     color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 12px 24px;
+    border-radius: 8px;
     font-size: 0.9rem;
     z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: left;
+    min-width: 200px;
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 成功图标 */
+.toast::before {
+    content: '✓';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    font-size: 0.8rem;
+}
+
+/* 动画状态 */
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        transform: translateY(120%);
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .toast.show {
+        transform: translateY(0);
+    }
 }
 
 .color-bars {
@@ -716,19 +771,37 @@ h3 {
     margin-bottom: 2rem;
 }
 
+/* 基础按钮样式 */
+.style-btn, .format-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 刷新按钮特殊样式 */
 .refresh-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
+    padding: 0 1.5rem;
+    font-size: 1rem;
     color: white;
     background: linear-gradient(135deg, #6366f1, #a855f7);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    height: 42px;
 }
 
 .refresh-btn:hover {
@@ -742,6 +815,30 @@ h3 {
 
 .refresh-btn:hover i {
     transform: rotate(180deg);
+}
+
+/* 刷新按钮旋转动画 */
+.refresh-btn.rotating i {
+    animation: rotate 0.3s ease;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.style-btn:hover, .format-btn:hover {
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.style-btn.active, .format-btn.active {
+    background: var(--primary);
+    color: white;
 }
 
 .palette-grid {
@@ -814,22 +911,104 @@ h3 {
     }
 }
 
-/* 添加刷新按钮动画 */
-.refresh-btn.rotating i {
-    animation: rotate 0.3s ease;
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 /* 优化色卡动画性能 */
 .color-card {
     will-change: transform;
     transform: translateZ(0);
+}
+
+/* 调整配色卡片布局 */
+.generate-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.controls {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.style-filter, .format-filter {
+    display: flex;
+    gap: 1rem;
+    background: var(--bg-secondary);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    height: 42px; /* 统一高度 */
+    box-sizing: border-box;
+}
+
+.format-filter {
+    padding: 0.5rem; /* 与style-filter保持一致 */
+}
+
+.format-btn {
+    font-family: monospace;
+    font-size: 1rem;
+    padding: 0 1rem;
+}
+
+.palette-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 固定3列 */
+    gap: 2rem;
+    max-width: 1200px; /* 限制最大宽度 */
+    margin: 0 auto;
+}
+
+.palette-card {
+    background: var(--bg-primary);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.palette-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 调整响应式布局 */
+@media (max-width: 1200px) {
+    .palette-container {
+        grid-template-columns: repeat(2, 1fr); /* 中等屏幕显示2列 */
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .generate-section {
+        padding: 1rem;
+    }
+    
+    .palette-container {
+        grid-template-columns: 1fr; /* 小屏幕显示1列 */
+        gap: 1rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .style-filter, .format-filter {
+        flex-wrap: wrap;
+        justify-content: center;
+        height: auto; /* 在移动端取消固定高度 */
+        padding: 0.25rem; /* 减小内边距 */
+    }
+
+    .style-btn, .format-btn, .refresh-btn {
+        height: 36px; /* 移动端稍微降低高度 */
+    }
+
+    .style-btn, .format-btn {
+        font-size: 0.95rem;
+    }
 } 
