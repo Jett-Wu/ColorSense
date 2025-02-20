@@ -186,13 +186,13 @@ class PaletteGenerator {
             });
         });
 
-        // 添加颜色格式切换事件监听
+        // 修改颜色格式切换事件监听
         document.querySelectorAll('.format-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 this.currentFormat = btn.dataset.format;
-                this.generatePalettes();
+                this.updateColorFormats(); // 只更新颜色格式显示
             });
         });
     }
@@ -365,6 +365,34 @@ class PaletteGenerator {
             toast.classList.remove('show');
             setTimeout(() => toast.remove(), 300);
         }, 2000);
+    }
+
+    // 新增方法：只更新颜色格式显示
+    updateColorFormats() {
+        this.paletteContainer.querySelectorAll('.color-block').forEach(block => {
+            const color = block.style.backgroundColor;
+            const hexColor = this.rgbToHex(color);
+            const colorValue = block.querySelector('.color-value');
+            colorValue.textContent = this.convertColor(hexColor);
+        });
+    }
+
+    // 新增方法：将 RGB 转换为 HEX
+    rgbToHex(rgb) {
+        // 处理 rgb(r, g, b) 格式
+        const values = rgb.match(/\d+/g);
+        if (!values) return '#000000';
+        
+        const r = parseInt(values[0]);
+        const g = parseInt(values[1]);
+        const b = parseInt(values[2]);
+        
+        const toHex = (n) => {
+            const hex = n.toString(16);
+            return hex.length === 1 ? '0' + hex : hex;
+        };
+        
+        return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
     }
 }
 
