@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生成配色 - ColorSense</title>
+    <title>一键配色 - ColorSense</title>
     
     <!-- 引入字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -22,8 +22,7 @@
             <a href="./" class="logo">ColorSense</a>
             <div class="nav-content">
                 <div class="nav-links">
-                    <a href="./recommend.html">推荐配色</a>
-                    <a href="./palettes.html" class="active">生成配色</a>
+                    <a href="./generate.html" class="active">一键配色</a>
                     <a href="./theory.html">色彩理论</a>
                 </div>
                 <div class="nav-controls">
@@ -59,15 +58,20 @@
     </nav>
 
     <main>
-        <section class="generate-palettes">
-            <div class="palette-controls">
+        <section class="generate-section">
+            <div class="controls">
+                <div class="mode-switch">
+                    <button class="mode-btn active" data-mode="recommend">推荐配色</button>
+                    <button class="mode-btn" data-mode="custom">自定义配色</button>
+                </div>
                 <button class="refresh-btn">
                     <i class="fas fa-sync-alt"></i>
                     刷新配色
                 </button>
             </div>
-            <div class="palette-grid">
-                <!-- 色卡将通过 JavaScript 动态生成 -->
+            
+            <div class="palette-container">
+                <!-- 配色方案将通过JavaScript动态生成 -->
             </div>
         </section>
     </main>
@@ -78,6 +82,6 @@
         </div>
     </footer>
 
-    <script type="module" src="js/palettes.js"></script>
+    <script type="module" src="js/generate.js"></script>
 </body>
 </html> 

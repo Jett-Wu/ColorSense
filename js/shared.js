@@ -18,8 +18,7 @@ export function initThemeSwitch() {
 const translations = {
     'zh': {
         'nav': {
-            'recommend': '推荐配色',
-            'generate': '生成配色',
+            'generate': '一键配色',
             'theory': '色彩理论'
         },
         'palettes': {
@@ -78,8 +77,7 @@ const translations = {
     },
     'en': {
         'nav': {
-            'recommend': 'Recommend',
-            'generate': 'Generate',
+            'generate': 'Generate Colors',
             'theory': 'Theory'
         },
         'palettes': {
