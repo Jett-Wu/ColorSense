@@ -1,4 +1,4 @@
-import { initThemeSwitch, initLangSwitch } from './shared.js';
+import { initThemeSwitch, initLangSwitch } from './settings.js';
 
 function init() {
     initThemeSwitch();
@@ -344,6 +344,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // 初始化其他色轮
     new ColorWheelInteraction('complementary');
     new ColorWheelInteraction('triadic');
+
+    // 初始化色彩基础文本内容
+    const descriptions = {
+        hue: '色相（Hue）是色彩在光谱中的位置，以角度表示（0°-360°），如红色0°、黄色60°、绿色120°、青色180°、蓝色240°、紫色300°。',
+        saturation: '饱和度（Saturation）表示色彩的纯度，即色彩中纯色的含量。值越高色彩越纯净鲜艳，越低则越接近灰色。',
+        brightness: '明度（Brightness）指色彩的明暗程度。值越高越接近白色越明亮，越低则越接近黑色越暗沉。'
+    };
+
+    document.querySelector('[data-i18n="theory.basics.description.hue"]').textContent = descriptions.hue;
+    document.querySelector('[data-i18n="theory.basics.description.saturation"]').textContent = descriptions.saturation;
+    document.querySelector('[data-i18n="theory.basics.description.brightness"]').textContent = descriptions.brightness;
+    document.querySelector('[data-i18n="theory.basics.subtitle"]').textContent = '色相、饱和度与明度';
 });
 
 // 辅助函数

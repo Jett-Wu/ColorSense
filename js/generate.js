@@ -1,4 +1,4 @@
-import { initThemeSwitch, initLangSwitch } from './shared.js';
+import { initThemeSwitch, initLangSwitch } from './settings.js';
 
 class PaletteGenerator {
     constructor() {
@@ -165,6 +165,10 @@ class PaletteGenerator {
         this.currentFormat = 'hex';
         this.setupEventListeners();
         this.generatePalettes();
+        
+        // 获取当前语言
+        this.currentLang = localStorage.getItem('language') || 'zh';
+        this.translations = getTranslations();
     }
     
     setupEventListeners() {
@@ -393,6 +397,14 @@ class PaletteGenerator {
         };
         
         return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    }
+
+    // 更新颜色信息显示
+    updateColorInfo(hue, saturation, brightness) {
+        const t = this.translations[this.currentLang].theory.colorInfo;
+        document.querySelector('.hue-value').textContent = `${Math.round(hue)}°`;
+        document.querySelector('.saturation-value').textContent = `${Math.round(saturation)}%`;
+        document.querySelector('.brightness-value').textContent = `${Math.round(brightness)}%`;
     }
 }
 
