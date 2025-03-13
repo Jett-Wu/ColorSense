@@ -955,9 +955,9 @@ h3 {
 
 .palette-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 固定3列 */
-    gap: 2rem;
-    max-width: 1200px; /* 限制最大宽度 */
+    grid-template-columns: repeat(4, 1fr); /* 从3列改为4列 */
+    gap: 1.5rem; /* 稍微减小间距以适应更多卡片 */
+    max-width: 1400px; /* 增加最大宽度以适应更多卡片 */
     margin: 0 auto;
 }
 
@@ -975,40 +975,21 @@ h3 {
 }
 
 /* 调整响应式布局 */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
     .palette-container {
-        grid-template-columns: repeat(2, 1fr); /* 中等屏幕显示2列 */
-        gap: 1.5rem;
+        grid-template-columns: repeat(3, 1fr); /* 中等屏幕显示3列 */
     }
 }
 
-@media (max-width: 768px) {
-    .generate-section {
-        padding: 1rem;
-    }
-    
+@media (max-width: 1000px) {
     .palette-container {
-        grid-template-columns: 1fr; /* 小屏幕显示1列 */
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr); /* 小屏幕显示2列 */
     }
+}
 
-    .controls {
-        flex-direction: column;
-        gap: 1rem;
+@media (max-width: 600px) {
+    .palette-container {
+        grid-template-columns: 1fr; /* 超小屏幕显示1列 */
     }
-
-    .style-filter, .format-filter {
-        flex-wrap: wrap;
-        justify-content: center;
-        height: auto; /* 在移动端取消固定高度 */
-        padding: 0.25rem; /* 减小内边距 */
-    }
-
-    .style-btn, .format-btn, .refresh-btn {
-        height: 36px; /* 移动端稍微降低高度 */
-    }
-
-    .style-btn, .format-btn {
-        font-size: 0.95rem;
-    }
+} 
 } 

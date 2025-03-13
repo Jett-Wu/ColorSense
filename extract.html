@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ColorSense - 智能配色方案</title>
+    <title>颜色提取 - ColorSense</title>
     
     <!-- 引入字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -15,15 +15,16 @@
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/components.css">
     <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="styles/extract.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="/" class="logo">ColorSense</a>
+            <a href="./" class="logo">ColorSense</a>
             <div class="nav-content">
                 <div class="nav-links">
                     <a href="./generate.html">一键配色</a>
-                    <a href="./extract.html">提取配色</a>
+                    <a href="./extract.html" class="active">提取配色</a>
                     <a href="./gradient.html">渐变色生成器</a>
                     <a href="./theory.html">色彩理论</a>
                 </div>
@@ -59,43 +60,53 @@
         </div>
     </nav>
 
-    <main class="main">
-        <div class="gradient-bg"></div>
-        
-        <section class="hero">
-            <div class="hero-content">
-                <h2>ColorSense</h2>
-                <p class="hero-subtitle">智能配色助手</p>
-                <div class="hero-actions">
-                    <a href="./generate.html" class="cta-button primary">一键配色</a>
-                    <a href="theory.html" class="cta-button secondary">色彩理论</a>
-                </div>
+    <main class="extract-container">
+        <section class="upload-section">
+            <div class="feature-intro">
+                <h2>图片配色提取</h2>
+                <p>上传您喜欢的图片，我们将自动分析并提取其中的主要配色方案。
+                   支持从照片、插画、UI设计等任何类型的图片中获取灵感。
+                </p>
+            </div>
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>点击或拖拽图片到此处</p>
+                <span class="upload-hint">支持 JPG、PNG 格式</span>
             </div>
         </section>
 
-        <section class="features">
-            <div class="feature-card">
-                <i class="fas fa-magic feature-icon"></i>
-                <h3>智能推荐</h3>
-                <p>基于专业色彩理论，一键生成优雅和谐的配色方案</p>
+        <section class="result-section" style="display: none;">
+            <div class="image-preview">
+                <img id="previewImage" src="" alt="预览图">
+                <div class="color-picker-section">
+                    <div class="color-picker-info">
+                        <div class="picked-color-preview"></div>
+                        <span class="picked-color-value"></span>
+                    </div>
+                    <p class="picker-hint">
+                        <i class="fas fa-eye-dropper"></i>
+                        点击图片任意位置选取颜色
+                    </p>
+                </div>
             </div>
-            <div class="feature-card">
-                <i class="fas fa-palette feature-icon"></i>
-                <h3>灵活配色</h3>
-                <p>支持单色、互补色、三角配色等多种专业配色模式</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-book feature-icon"></i>
-                <h3>理论指南</h3>
-                <p>提供交互式色彩理论学习，轻松掌握配色技巧</p>
+            <div class="colors-preview">
+                <h3>自动提取</h3>
+                <div class="extracted-colors"></div>
+                <div class="color-actions">
+                    <button class="copy-all-btn">
+                        <i class="fas fa-copy"></i>
+                        复制
+                    </button>
+                    <button class="save-btn">
+                        <i class="fas fa-heart"></i>
+                        保存
+                    </button>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <p>© 2024 ColorSense</p>
-    </footer>
-
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/extract.js"></script>
 </body>
 </html> 

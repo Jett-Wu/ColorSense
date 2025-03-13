@@ -13,6 +13,17 @@
     --transition: all 0.3s ease;
     --navbar-bg: rgba(255, 255, 255, 0.95);
     --footer-bg: rgba(248, 249, 250, 0.95);
+    --bg-secondary-rgb: 249, 250, 251;  /* 浅色模式 */
+    --bg-accent-rgb: 243, 244, 246;
+    --primary-rgb: 99, 102, 241;
+    --text-secondary-rgb: 107, 114, 128;
+}
+
+[data-theme='dark'] {
+    --bg-secondary-rgb: 31, 41, 55;     /* 深色模式 */
+    --bg-accent-rgb: 38, 48, 62;
+    --primary-rgb: 99, 102, 241;
+    --text-secondary-rgb: 156, 163, 175;
 }
 
 * {

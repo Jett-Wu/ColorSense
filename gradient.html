@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渐变色生成器 - ColorSense</title>
+    
+    <!-- 引入字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="styles/gradient.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./" class="logo">ColorSense</a>
+            <div class="nav-content">
+                <div class="nav-links">
+                    <a href="./generate.html">一键配色</a>
+                    <a href="./extract.html">提取配色</a>
+                    <a href="./gradient.html" class="active">渐变色生成器</a>
+                    <a href="./theory.html">色彩理论</a>
+                </div>
+                <div class="nav-controls">
+                    <a href="https://github.com/Jett-Wu/ColorSense" class="github-star" target="_blank">
+                        <i class="fab fa-github"></i>
+                        <span>Star</span>
+                    </a>
+                    <div class="theme-switch-wrapper">
+                        <label class="theme-switch" title="切换主题">
+                            <input type="checkbox" class="theme-switch-input">
+                            <span class="theme-switch-track">
+                                <span class="theme-switch-thumb">
+                                    <i class="fas fa-moon theme-switch-icon moon-icon"></i>
+                                    <i class="fas fa-sun theme-switch-icon sun-icon"></i>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="lang-switch-wrapper">
+                        <label class="lang-switch" title="Switch Language">
+                            <input type="checkbox" class="lang-switch-input">
+                            <span class="lang-switch-track">
+                                <span class="lang-switch-thumb">
+                                    <span class="lang-icon zh-icon">中</span>
+                                    <span class="lang-icon en-icon">EN</span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="gradient-container">
+        <section class="info-panel">
+            <h2>渐变色生成器</h2>
+            <p>创建和自定义线性渐变、径向渐变和锥形渐变，支持多个颜色节点和位置调整。</p>
+        </section>
+        
+        <section class="gradient-editor">
+            <div class="preview-section">
+                <div class="gradient-preview"></div>
+                <div class="gradient-code">
+                    <code id="gradientCode"></code>
+                    <button class="copy-code-btn">
+                        <i class="fas fa-copy"></i>
+                        复制
+                    </button>
+                </div>
+            </div>
+            
+            <div class="controls-section">
+                <div class="gradient-type">
+                    <h3>渐变类型</h3>
+                    <div class="type-buttons">
+                        <button class="active" data-type="linear">
+                            <i class="fas fa-grip-lines"></i>
+                            线性渐变
+                        </button>
+                        <button data-type="radial">
+                            <i class="fas fa-circle"></i>
+                            径向渐变
+                        </button>
+                        <button data-type="conic">
+                            <i class="fas fa-circle-notch"></i>
+                            锥形渐变
+                        </button>
+                    </div>
+                </div>
+
+                <div class="color-stops">
+                    <h3>颜色节点</h3>
+                    <div class="color-stops-container">
+                        <div class="color-stop-slider"></div>
+                        <button class="add-color-stop">
+                            <i class="fas fa-plus"></i>
+                            添加颜色
+                        </button>
+                    </div>
+                </div>
+
+                <div class="gradient-options">
+                    <h3>渐变选项</h3>
+                    <div class="option-group" id="angleGroup">
+                        <label>角度</label>
+                        <input type="range" id="angleSlider" min="0" max="360" value="90">
+                        <span class="angle-value">90°</span>
+                    </div>
+                    <div class="option-group" id="positionGroup" style="display: none;">
+                        <label>位置</label>
+                        <select id="positionSelect">
+                            <option value="center">中心</option>
+                            <option value="top">顶部</option>
+                            <option value="right">右侧</option>
+                            <option value="bottom">底部</option>
+                            <option value="left">左侧</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="presets-section">
+            <div class="gradient-presets">
+                <h3>预设模板</h3>
+                <div class="preset-grid">
+                    <!-- 现代简约 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)">
+                        <div class="preset-preview"></div>
+                        <span>清澈</span>
+                    </button>
+                    
+                    <!-- 日落渐变 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #fa709a 0%, #fee140 100%)">
+                        <div class="preset-preview"></div>
+                        <span>日落</span>
+                    </button>
+                    
+                    <!-- 极光 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #00dbde 0%, #fc00ff 100%)">
+                        <div class="preset-preview"></div>
+                        <span>极光</span>
+                    </button>
+                    
+                    <!-- 森林 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #0ba360 0%, #3cba92 100%)">
+                        <div class="preset-preview"></div>
+                        <span>森林</span>
+                    </button>
+                    
+                    <!-- 深邃 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #1e3c72 0%, #2a5298 100%)">
+                        <div class="preset-preview"></div>
+                        <span>深邃</span>
+                    </button>
+                    
+                    <!-- 紫罗兰 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #6b46c1 0%, #cc2b5e 100%)">
+                        <div class="preset-preview"></div>
+                        <span>紫罗兰</span>
+                    </button>
+                    
+                    <!-- 晚霞 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #ff758c 0%, #ff7eb3 100%)">
+                        <div class="preset-preview"></div>
+                        <span>晚霞</span>
+                    </button>
+                    
+                    <!-- 薄暮 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #2c3e50 0%, #3498db 100%)">
+                        <div class="preset-preview"></div>
+                        <span>薄暮</span>
+                    </button>
+                    
+                    <!-- 春意 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #a8e6cf 0%, #dcedc1 50%, #ffd3b6 100%)">
+                        <div class="preset-preview"></div>
+                        <span>春意</span>
+                    </button>
+                    
+                    <!-- 静谧 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #48c6ef 0%, #6f86d6 100%)">
+                        <div class="preset-preview"></div>
+                        <span>静谧</span>
+                    </button>
+                    
+                    <!-- 暖阳 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #f6d365 0%, #fda085 100%)">
+                        <div class="preset-preview"></div>
+                        <span>暖阳</span>
+                    </button>
+                    
+                    <!-- 星空 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #0c2461 0%, #4834d4 50%, #686de0 100%)">
+                        <div class="preset-preview"></div>
+                        <span>星空</span>
+                    </button>
+
+                    <!-- 莫奈日出 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #ff9a9e 0%, #fad0c4 50%, #fad0c4 100%)">
+                        <div class="preset-preview"></div>
+                        <span>莫奈</span>
+                    </button>
+
+                    <!-- 极地光晕 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #5ee7df 0%, #b490ca 100%)">
+                        <div class="preset-preview"></div>
+                        <span>极地</span>
+                    </button>
+
+                    <!-- 海洋之心 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #0093E9 0%, #80D0C7 100%)">
+                        <div class="preset-preview"></div>
+                        <span>海洋</span>
+                    </button>
+
+                    <!-- 梦幻极光 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%)">
+                        <div class="preset-preview"></div>
+                        <span>梦幻</span>
+                    </button>
+
+                    <!-- 紫水晶 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #8BC6EC 0%, #9599E2 100%)">
+                        <div class="preset-preview"></div>
+                        <span>水晶</span>
+                    </button>
+
+                    <!-- 赤霞橘金 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #FBAB7E 0%, #F7CE68 100%)">
+                        <div class="preset-preview"></div>
+                        <span>橘金</span>
+                    </button>
+
+                    <!-- 青玉 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #96FBC4 0%, #F9F586 100%)">
+                        <div class="preset-preview"></div>
+                        <span>青玉</span>
+                    </button>
+
+                    <!-- 墨韵 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #2C3E50 0%, #3498DB 50%, #2980B9 100%)">
+                        <div class="preset-preview"></div>
+                        <span>墨韵</span>
+                    </button>
+
+                    <!-- 玫瑰金 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #E8CBC0 0%, #636FA4 100%)">
+                        <div class="preset-preview"></div>
+                        <span>玫瑰金</span>
+                    </button>
+
+                    <!-- 翡翠 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #43E97B 0%, #38F9D7 100%)">
+                        <div class="preset-preview"></div>
+                        <span>翡翠</span>
+                    </button>
+
+                    <!-- 琥珀 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #F9D423 0%, #FF4E50 100%)">
+                        <div class="preset-preview"></div>
+                        <span>琥珀</span>
+                    </button>
+
+                    <!-- 紫檀 -->
+                    <button class="preset-item" data-gradient="linear-gradient(45deg, #4A00E0 0%, #8E2DE2 100%)">
+                        <div class="preset-preview"></div>
+                        <span>紫檀</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="js/gradient.js"></script>
+</body>
+</html> 
